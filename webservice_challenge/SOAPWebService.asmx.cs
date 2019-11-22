@@ -22,5 +22,23 @@ namespace webservice_challenge
         {
             return "Hello World";
         }
+
+        [WebMethod]
+        public Int64 Fibonacci(string Number)
+        {
+            Int64 result= (Int64)(-1);
+            bool isConverted = int.TryParse(Number, out int convertedNumber);
+            if (isConverted)
+            {
+                if (convertedNumber <= 100 && convertedNumber >= 0)
+                {
+                    var FibCalcul = new FibonacciCalcul();
+                    result = FibCalcul.GetFibonacci(convertedNumber);
+                } 
+            }
+
+            return result;
+        }
+
     }
 }
