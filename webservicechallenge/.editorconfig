@@ -1,0 +1,16 @@
+﻿[*.cs]
+
+# IDE0005: La directive using n'est pas nécessaire.
+dotnet_diagnostic.IDE0005.severity = none
+
+# SA1600: Elements should be documented
+dotnet_diagnostic.SA1600.severity = none
+
+# CS1591: Commentaire XML manquant pour le type ou le membre visible publiquement
+dotnet_diagnostic.CS1591.severity = none
+
+# CA1031: Ne pas intercepter les types d'exception générale
+dotnet_diagnostic.CA1031.severity = none
+
+# CA3075: Traitement DTD non sécurisé dans le code XML
+dotnet_diagnostic.CA3075.severity = none

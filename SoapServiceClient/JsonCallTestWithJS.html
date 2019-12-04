@@ -1,0 +1,236 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="Scripts/jquery-3.4.1.js"></script>
+    <link href="Content/bootstrap.css" rel="stylesheet" />
+    <style>
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 99999;
+            transition: 1s;
+        }
+
+        .span {
+            position: absolute;
+            transform: translate(-50%, 50%);
+            width: 120px;
+            height: 120px;
+            top: 35%;
+            border: 5px solid #262626;
+            z-index: 1;
+            animation: animar 2.5s linear infinite;
+        }
+
+            .span:before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: #262626;
+                animation: animarbg 2.5s linear infinite;
+            }
+
+        @keyframes animar {
+            0% {
+                transform: translate(-50%, 50%) rotate(0deg);
+            }
+
+            25% {
+                transform: translate(-50%, 50%) rotate(180deg);
+            }
+
+            50% {
+                transform: translate(-50%, 50%) rotate(180deg);
+            }
+
+            75% {
+                transform: translate(-50%, 50%) rotate(360deg);
+            }
+
+            100% {
+                transform: translate(-50%, 50%) rotate(360deg);
+            }
+        }
+
+        @keyframes animarbg {
+            0% {
+                height: 0;
+            }
+
+            25% {
+                height: 0;
+            }
+
+            50% {
+                height: 100%;
+            }
+
+            75% {
+                height: 100%;
+            }
+
+            100% {
+                height: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10">
+                <form class="form-horizontal">
+                    <fieldset>
+
+                        <!-- Form Name -->
+                        <legend>Fibonacci Test</legend>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="txtNumber">Number : </label>
+                            <div class="col-md-4">
+                                <input id="txtNumber" name="txtNumber" type="text" placeholder="Number" class="form-control input-md" required="" />
+                            </div>
+                        </div>
+
+                        <!-- Textarea -->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="txtResponse">Reponse :</label>
+                            <div class="col-md-4">
+                                <textarea class="form-control" id="txtResponse" name="txtResponse"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Button -->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="btnTestFibonacci"></label>
+                            <div class="col-md-4">
+                                <button id="btnTestFibonacci" name="btnTestFibonacci" class="btn btn-primary" type="button">Submit Fibonacci</button>
+                            </div>
+                        </div>
+
+                    </fieldset>
+                </form>
+            </div>
+        </div> <div class="row">
+            <div class="col-lg-10">
+                <form class="form-horizontal">
+                    <fieldset>
+
+                        <!-- Form Name -->
+                        <legend>XmlToJson Test</legend>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="txtXml">XML string : </label>
+                            <div class="col-md-4">
+                                <input id="txtXml" name="txtXml" type="text" placeholder="XML" class="form-control input-md" required="" />
+                            </div>
+                        </div>
+
+                        <!-- Textarea -->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="txtResponseJson">Reponse XmlToJson:</label>
+                            <div class="col-md-4">
+                                <textarea class="form-control" id="txtResponseJson" name="txtResponseJson"></textarea>
+                            </div>
+                        </div>
+                        <!-- Button -->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="btnTestXmlToJson"></label>
+                            <div class="col-md-4">
+                                <button id="btnTestXmlToJson" name="btnTestXmlToJson" class="btn btn-primary" type="button">Submit XmlToJson</button>
+                            </div>
+                        </div>
+
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="wait" style="display:none">
+        <div class="loader text-center">
+            <span class="span"></span>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(document).ajaxStart(function () {
+            $("#wait").css("display", "block");
+        });
+        $(document).ajaxComplete(function () {
+            $("#wait").css("display", "none");
+        });
+
+        $(document).ready(function () {
+
+            $('#btnTestFibonacci').click(function () {
+                 var data = {
+                    number:""
+                };
+
+                if ($("#txtNumber").val() != "") {
+                    data.number = $("#txtNumber").val();
+                }
+
+                console.log(data);
+                $.ajax(
+                    {
+                        type: "POST",
+                        url: "https://localhost:44324/SOAPWebService.asmx/Fibonacci",
+                        data: JSON.stringify(data),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: OnSuccess,
+                        error: OnError
+
+                    });
+
+                function OnSuccess(data, status) {
+                    $("#txtResponse").val("Result calling Fibonacci web Methode : " + data.d);
+                };
+
+                function OnError(data) {
+                    $("#txtResponse").val("error calling Fibonacci web Methode");
+                }
+            });
+
+            $('#btnTestXmlToJson').click(function () {
+                var data = {
+                    xmlString:""
+                };
+                if ($("#txtXml").val() != "") {
+                    data.xmlString = $("#txtXml").val();
+                }
+
+                console.log(data);
+                $.ajax(
+                    {
+                        type: "POST",
+                        url: "https://localhost:44324/SOAPWebService.asmx/XmlToJson",
+                        data: JSON.stringify(data),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: OnSuccess,
+                        error: OnError
+                    });
+
+                function OnSuccess(data, status) {
+                    $("#txtResponseJson").val("Result calling XmlToJson web Methode : " + data.d);
+                };
+
+                function OnError(data) {
+                    $("#txtResponseJson").val("error calling XmlToJson web Methode");
+                }
+            });
+
+        });
+    </script>
+</body>
+</html>
