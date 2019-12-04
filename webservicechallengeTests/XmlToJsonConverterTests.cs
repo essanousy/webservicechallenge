@@ -11,6 +11,7 @@ namespace WebServiceChallenge.Tests
             
             string xmlstring = "<root><item>test</item></root>";
             string json = XmlToJsonConverter.XmlToJson(xmlstring);
+            json = json.Replace("\r\n", "").Replace(" ", ""); //remove formating
             Assert.AreEqual(json, @"{""root"":{""item"":""test""}}");
         }
 
