@@ -6,6 +6,9 @@ namespace WebServiceChallenge
 {
     public static class FibonacciCalcul
     {
+        /// <summary>Gets the fibonacci value.</summary>
+        /// <param name="value">The input value.</param>
+        /// <returns>Fibonacci value.</returns>
         public static long GetFibonacci(int value)
         {
             if (value < 2)

@@ -9,6 +9,9 @@ namespace WebServiceChallenge
 
     public static class XmlToJsonConverter
     {
+        /// <summary>XMLs to json.</summary>
+        /// <param name="xmlString">The XML string.</param>
+        /// <returns>the JSON result.</returns>
         public static string XmlToJson(string xmlString)
         {
             string json;
