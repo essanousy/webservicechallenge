@@ -9,7 +9,7 @@ for details about the challenge see the gist : https://gist.github.com/lemonway/
 1- SoapServiceClient        : contains mainform that does SOAP calls with xml to the webservice, 
                               and the html page JsonCallTestWithJS.html that call the web service using JSON
 
-2- webservicechallenge      : the saop web service
+2- webservicechallenge      : the soap web service
 
 3- webservicechallengeTests : unit testing for the functions used by the web server.
 
